@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
-    "pino": "3.0.5"
+    "pino": "3.0.5",
+    "ws": "1.1.1"
   },
   "devDependencies": {
     "coveralls": "2.11.14",
