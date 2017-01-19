@@ -1,7 +1,14 @@
 const { join } = require('path')
 
-module.exports.logger = function (opts, cb = function () {}) {
-  let logger = new (require(join(__dirname, 'lib', 'logger')))(opts)
-  cb(logger)
-  return logger
+let logger = (opts, cb = function () {}) => {
+  let _logger = new (require(join(__dirname, 'lib', 'logger')))(opts)
+  cb(_logger)
+  return _logger
 }
+
+let message = require(join(__dirname, 'lib', 'message'))
+
+let server = type => require(join(__dirname, 'lib', type, 'server'))
+let client = type => require(join(__dirname, 'lib', type, 'client'))
+
+module.exports = { logger, server, client, message }

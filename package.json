@@ -1,6 +1,6 @@
 {
   "name": "oak-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Helpful utilities for developing oak applications",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
+    "msgpack5": "3.4.1",
     "pino": "3.0.5",
     "ws": "1.1.1"
   },
