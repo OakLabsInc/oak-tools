@@ -13,10 +13,15 @@ Helpful utilities for developing oak applications
 
 `npm install --save oak-tools`
 
+## Usage & Examples
+
+Head on over to the [documentation](https://oaklabsinc.github.io/oak-tools/) page!
+
 ## Scripts
 
  - **npm run coverage** : `node node_modules/.bin/istanbul cover node_modules/.bin/tape test/*.js || true`
  - **npm run coveralls** : `npm run-script coverage && node node_modules/.bin/coveralls < coverage/lcov.info && rm -rf coverage/ || true`
+ - **npm run generate-docs** : `node_modules/.bin/jsdoc -c jsdoc.json`
  - **npm run readme** : `node ./node_modules/.bin/node-readme`
  - **npm run test** : `node_modules/.bin/standard && find test/*.js | xargs -n 1 node | node_modules/.bin/tap-difflet`
 
@@ -28,6 +33,7 @@ Package | Version | Dev
 [pino](https://www.npmjs.com/package/pino) | 3.0.5 | ✖
 [ws](https://www.npmjs.com/package/ws) | 1.1.1 | ✖
 [coveralls](https://www.npmjs.com/package/coveralls) | 2.11.14 | ✔
+[docdash](https://www.npmjs.com/package/docdash) | 0.4.0 | ✔
 [istanbul](https://www.npmjs.com/package/istanbul) | 0.4.2 | ✔
 [node-readme](https://www.npmjs.com/package/node-readme) | 0.1.9 | ✔
 [standard](https://www.npmjs.com/package/standard) | 8.5.0 | ✔
@@ -37,7 +43,7 @@ Package | Version | Dev
 
 ## Contributing
 
-Contributions welcome; Please submit all pull requests against the master branch. If your pull request contains JavaScript patches or features, you should include relevant unit tests. Thanks!
+Contributions welcome; Please submit all pull requests against the master branch. If your pull request contains patches or features, you should include relevant unit tests. Thanks!
 
 ## Authors
 

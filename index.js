@@ -1,14 +1,45 @@
+
 const { join } = require('path')
 
-let logger = (opts, cb = function () {}) => {
-  let _logger = new (require(join(__dirname, 'lib', 'logger')))(opts)
-  cb(_logger)
-  return _logger
+/**
+ * oak-tools module
+ * @version 0.2.0
+ * @module oak-tools
+ */
+
+/**
+ * Logger object
+ * @param {object} options options object
+ * @param {function} callback callback function
+ * @returns {Logger}
+ */
+module.exports.logger = function () {
+  return require(join(__dirname, 'lib', 'logger'))
 }
 
-let message = require(join(__dirname, 'lib', 'message'))
+/**
+ * Message class
+ * @returns {Message}
+ */
+module.exports.message = function () {
+  return require(join(__dirname, 'lib', 'message'))
+}
 
-let server = type => require(join(__dirname, 'lib', type, 'server'))
-let client = type => require(join(__dirname, 'lib', type, 'client'))
+/**
+ * Starts a messaging server
+ * @param {string} type Type of server
+ * @returns {WebSocketServer}
+ */
+module.exports.server = function (type) {
+  return require(join(__dirname, 'lib', type, 'server'))
+}
 
-module.exports = { logger, server, client, message }
+/**
+ * Starts a messaging client
+ * @param {string} type Type of client
+ * @returns {WebSocketClient}
+ */
+
+module.exports.client = function (type) {
+  return require(join(__dirname, 'lib', type, 'client'))
+}

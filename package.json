@@ -6,6 +6,7 @@
   "scripts": {
     "coverage": "node node_modules/.bin/istanbul cover node_modules/.bin/tape test/*.js || true",
     "coveralls": "npm run-script coverage && node node_modules/.bin/coveralls < coverage/lcov.info && rm -rf coverage/ || true",
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
     "readme": "node ./node_modules/.bin/node-readme",
     "test": "node_modules/.bin/standard && find test/*.js | xargs -n 1 node | node_modules/.bin/tap-difflet"
   },
@@ -31,8 +32,14 @@
     "pino": "3.0.5",
     "ws": "1.1.1"
   },
+  "standard": {
+    "ignore": [
+      "docs"
+    ]
+  },
   "devDependencies": {
     "coveralls": "2.11.14",
+    "docdash": "0.4.0",
     "istanbul": "0.4.2",
     "node-readme": "0.1.9",
     "standard": "8.5.0",

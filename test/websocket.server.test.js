@@ -21,7 +21,7 @@ test('*** server', function (t) {
 
   t.comment('methods')
   t.true(_.isFunction(server.close), 'has close method')
-  t.true(_.isFunction(server.publish), 'has publish method')
+  t.true(_.isFunction(server.pub), 'has pub method')
 
   t.comment('properties')
   t.true(_.property(server.server), 'has server property')
