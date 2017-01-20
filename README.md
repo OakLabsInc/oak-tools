@@ -1,6 +1,6 @@
 # oak-tools
 
-![npm](https://img.shields.io/npm/v/oak-tools.svg) ![license](https://img.shields.io/npm/l/oak-tools.svg) ![github-issues](https://img.shields.io/github/issues/OakLabsInc/oak-tools.svg)
+![npm](https://img.shields.io/npm/v/oak-tools.svg) ![license](https://img.shields.io/npm/l/oak-tools.svg) ![github-issues](https://img.shields.io/github/issues/OakLabsInc/oak-tools.svg) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-green.svg)](http://standardjs.com/)
 
 Helpful utilities for developing oak applications
 
