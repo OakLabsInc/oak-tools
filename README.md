@@ -1,6 +1,6 @@
 # oak-tools
 
-![npm](https://img.shields.io/npm/v/oak-tools.svg) ![license](https://img.shields.io/npm/l/oak-tools.svg) ![github-issues](https://img.shields.io/github/issues/OakLabsInc/oak-tools.svg) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-green.svg)](http://standardjs.com/)
+![npm](https://img.shields.io/npm/v/oak-tools.svg) ![Circle CI build status](https://circleci.com/gh/OakLabsInc/oak-tools.svg?style=svg) [![Coverage Status](https://coveralls.io/repos/github/OakLabsInc/oak-tools/badge.svg?branch=master)](https://coveralls.io/github/OakLabsInc/oak-tools?branch=master) ![license](https://img.shields.io/npm/l/oak-tools.svg) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-green.svg)](http://standardjs.com/)
 
 Helpful utilities for developing oak applications
 
@@ -112,14 +112,15 @@ Package | Version | Dev
 --- |:---:|:---:
 [msgpack5](https://www.npmjs.com/package/msgpack5) | 3.4.1 | ✖
 [pino](https://www.npmjs.com/package/pino) | 3.0.5 | ✖
+[uuid](https://www.npmjs.com/package/uuid) | 3.0.1 | ✖
 [ws](https://www.npmjs.com/package/ws) | 1.1.1 | ✖
-[coveralls](https://www.npmjs.com/package/coveralls) | 2.11.14 | ✔
+[coveralls](https://www.npmjs.com/package/coveralls) | 2.11.15 | ✔
 [docdash](https://www.npmjs.com/package/docdash) | 0.4.0 | ✔
-[istanbul](https://www.npmjs.com/package/istanbul) | 0.4.2 | ✔
+[istanbul](https://www.npmjs.com/package/istanbul) | 0.4.5 | ✔
 [node-readme](https://www.npmjs.com/package/node-readme) | 0.1.9 | ✔
-[standard](https://www.npmjs.com/package/standard) | 8.5.0 | ✔
-[tap-difflet](https://www.npmjs.com/package/tap-difflet) | 0.4.0 | ✔
-[tape](https://www.npmjs.com/package/tape) | 4.6.0 | ✔
+[standard](https://www.npmjs.com/package/standard) | 8.6.0 | ✔
+[tap-difflet](https://www.npmjs.com/package/tap-difflet) | 0.7.0 | ✔
+[tape](https://www.npmjs.com/package/tape) | 4.6.3 | ✔
 
 
 ## Contributing
