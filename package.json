@@ -4,9 +4,10 @@
   "description": "Helpful utilities for developing oak applications",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/standard && find test/*.js | xargs -n 1 node | node_modules/.bin/tap-difflet",
     "coverage": "node node_modules/.bin/istanbul cover node_modules/.bin/tape test/*.js || true",
-    "coveralls": "npm run-script coverage && node node_modules/.bin/coveralls < coverage/lcov.info && rm -rf coverage/ || true"
+    "coveralls": "npm run-script coverage && node node_modules/.bin/coveralls < coverage/lcov.info && rm -rf coverage/ || true",
+    "readme": "node ./node_modules/.bin/node-readme",
+    "test": "node_modules/.bin/standard && find test/*.js | xargs -n 1 node | node_modules/.bin/tap-difflet"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "coveralls": "2.11.14",
     "istanbul": "0.4.2",
+    "node-readme": "0.1.9",
     "standard": "8.5.0",
     "tap-difflet": "0.4.0",
     "tape": "4.6.0"
