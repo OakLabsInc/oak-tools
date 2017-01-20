@@ -18,6 +18,9 @@
     "Flynn Joffray <nucleardreamer@gmail.com>",
     "Nir Ziv <nir@oaklabs.is>"
   ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "keywords": [
     "utilities",
     "oak"
@@ -30,6 +33,7 @@
   "dependencies": {
     "msgpack5": "3.4.1",
     "pino": "3.0.5",
+    "uuid": "3.0.1",
     "ws": "1.1.1"
   },
   "standard": {
@@ -38,12 +42,12 @@
     ]
   },
   "devDependencies": {
-    "coveralls": "2.11.14",
+    "coveralls": "2.11.15",
     "docdash": "0.4.0",
-    "istanbul": "0.4.2",
+    "istanbul": "0.4.5",
     "node-readme": "0.1.9",
-    "standard": "8.5.0",
-    "tap-difflet": "0.4.0",
-    "tape": "4.6.0"
+    "standard": "8.6.0",
+    "tap-difflet": "0.7.0",
+    "tape": "4.6.3"
   }
 }

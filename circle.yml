@@ -1,0 +1,19 @@
+general:
+  artifacts:
+    - "coverage"
+dependencies:
+  override:
+    - nvm unload
+    - rm -rf ~/.nvm && rm -rf ~/.npm && rm -rf ~/.bower
+    - git clone https://github.com/creationix/nvm.git ~/.nvm
+    - source ~/.nvm/nvm.sh
+    - nvm i 6 && nvm alias default 6
+    - rm -rf ./node_modules
+    - npm i
+test:
+  override:
+    - npm run coverage
+  post:
+    - mkdir $CIRCLE_ARTIFACTS/$CIRCLE_BUILD_NUM
+    - cp -ra ./coverage/. $CIRCLE_ARTIFACTS/$CIRCLE_BUILD_NUM/.
+    - npm run coveralls
