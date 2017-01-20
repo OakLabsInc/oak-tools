@@ -1,6 +1,6 @@
 {
   "name": "oak-tools",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Helpful utilities for developing oak applications",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
+    "eventemitter2": "2.2.2",
     "msgpack5": "3.4.1",
     "pino": "3.0.5",
     "uuid": "3.0.1",
