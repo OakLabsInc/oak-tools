@@ -4,7 +4,7 @@ let Server = require(join(__dirname, '..')).server('websocket')
 let server = new Server()
 
 server.on('error', function (err) {
-  console.error('* server error', err)
+  console.error('* client error', err)
 })
 
 server.on('connection', function (ID) {
