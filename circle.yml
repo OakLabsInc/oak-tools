@@ -1,13 +1,11 @@
 general:
   artifacts:
     - "coverage"
+machine:
+  node:
+    version: 6
 dependencies:
   override:
-    - nvm unload
-    - rm -rf ~/.nvm && rm -rf ~/.npm && rm -rf ~/.bower
-    - git clone https://github.com/creationix/nvm.git ~/.nvm
-    - source ~/.nvm/nvm.sh
-    - nvm i 6 && nvm alias default 6
     - rm -rf ./node_modules
     - npm i
 test:
