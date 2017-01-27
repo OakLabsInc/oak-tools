@@ -9,8 +9,8 @@ const { join } = require('path')
 
 /**
  * Logger object
- * @param {object} options options object
- * @param {function} callback callback function
+ * @param {Object} options options object
+ * @param {Function} callback callback function
  * @returns {Logger}
  */
 module.exports.logger = function () {
