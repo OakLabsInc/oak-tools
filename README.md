@@ -85,10 +85,9 @@ let client = new Client({
   id: 'sean connery'
 })
 
-client.on('open', function () {
+client.on('ready', function () {
   console.log('* client is connected')
   client
-    .sub('heres.who')
     .on('heres.who', function ({ answer }) {
       console.log(answer)
     })
@@ -110,10 +109,12 @@ client.on('open', function () {
 
 Package | Version | Dev
 --- |:---:|:---:
-[msgpack5](https://www.npmjs.com/package/msgpack5) | 3.4.1 | ✖
-[pino](https://www.npmjs.com/package/pino) | 3.0.5 | ✖
-[uuid](https://www.npmjs.com/package/uuid) | 3.0.1 | ✖
-[ws](https://www.npmjs.com/package/ws) | 1.1.1 | ✖
+[eventemitter2](https://www.npmjs.com/package/eventemitter2) | ~2.2.2 | ✖
+[minimatch](https://www.npmjs.com/package/minimatch) | ~3.0.3 | ✖
+[msgpack5](https://www.npmjs.com/package/msgpack5) | ~3.4.1 | ✖
+[pino](https://www.npmjs.com/package/pino) | ~3.0.5 | ✖
+[uuid](https://www.npmjs.com/package/uuid) | ~3.0.1 | ✖
+[ws](https://www.npmjs.com/package/ws) | ~1.1.1 | ✖
 [coveralls](https://www.npmjs.com/package/coveralls) | 2.11.15 | ✔
 [docdash](https://www.npmjs.com/package/docdash) | 0.4.0 | ✔
 [istanbul](https://www.npmjs.com/package/istanbul) | 0.4.5 | ✔

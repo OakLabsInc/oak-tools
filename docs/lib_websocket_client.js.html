@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Logger.html">Logger</a></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#decode">decode</a></li><li data-type='method'><a href="Message.html#encode">encode</a></li><li data-type='method'><a href="Message.html#pack">pack</a></li><li data-type='method'><a href="Message.html#unpack">unpack</a></li></ul></li><li><a href="WebSocketClient.html">WebSocketClient</a><ul class='methods'><li data-type='method'><a href="WebSocketClient.html#close">close</a></li><li data-type='method'><a href="WebSocketClient.html#pub">pub</a></li><li data-type='method'><a href="WebSocketClient.html#sub">sub</a></li><li data-type='method'><a href="WebSocketClient.html#unsub">unsub</a></li></ul></li><li><a href="WebSocketServer.html">WebSocketServer</a><ul class='methods'><li data-type='method'><a href="WebSocketServer.html#close">close</a></li><li data-type='method'><a href="WebSocketServer.html#pub">pub</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-oak-tools.html">oak-tools</a><ul class='methods'><li data-type='method'><a href="module-oak-tools.html#.client">client</a></li><li data-type='method'><a href="module-oak-tools.html#.logger">logger</a></li><li data-type='method'><a href="module-oak-tools.html#.message">message</a></li><li data-type='method'><a href="module-oak-tools.html#.server">server</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="WebSocketServer.html#event:close">close</a></li><li><a href="WebSocketServer.html#event:connection">connection</a></li><li><a href="WebSocketServer.html#event:error">error</a></li><li><a href="WebSocketServer.html#event:reconnect">reconnect</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Logger.html">Logger</a></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#decode">decode</a></li><li data-type='method'><a href="Message.html#encode">encode</a></li><li data-type='method'><a href="Message.html#pack">pack</a></li><li data-type='method'><a href="Message.html#unpack">unpack</a></li></ul></li><li><a href="WebSocketClient.html">WebSocketClient</a><ul class='methods'><li data-type='method'><a href="WebSocketClient.html#close">close</a></li><li data-type='method'><a href="WebSocketClient.html#pub">pub</a></li></ul></li><li><a href="WebSocketServer.html">WebSocketServer</a><ul class='methods'><li data-type='method'><a href="WebSocketServer.html#close">close</a></li><li data-type='method'><a href="WebSocketServer.html#pub">pub</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-oak-tools.html">oak-tools</a><ul class='methods'><li data-type='method'><a href="module-oak-tools.html#.client">client</a></li><li data-type='method'><a href="module-oak-tools.html#.logger">logger</a></li><li data-type='method'><a href="module-oak-tools.html#.message">message</a></li><li data-type='method'><a href="module-oak-tools.html#.server">server</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="WebSocketClient.html#event:close">close</a></li><li><a href="WebSocketClient.html#event:connect">connect</a></li><li><a href="WebSocketClient.html#event:ready">ready</a></li><li><a href="WebSocketServer.html#event:close">close</a></li><li><a href="WebSocketServer.html#event:connection">connection</a></li><li><a href="WebSocketServer.html#event:error">error</a></li><li><a href="WebSocketServer.html#event:reconnect">reconnect</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -37,35 +37,69 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Client = require('ws')
+            <pre class="prettyprint source linenums"><code>const UUID = require('uuid/v4')
+const Client = require('ws')
 const url = require('url')
 const _ = require('lodash')
-const { v4: UUID } = require('node-uuid')
-const { EventEmitter } = require('events')
+const { EventEmitter2 } = require('eventemitter2')
 const { join } = require('path')
 const Message = require(join(__dirname, '..', 'message'))
+
+let log = { debug: function () {} }
+
+if (process.env.NODE_ENV !== 'production') {
+  log = new (require(join(__dirname, '..', 'logger')))({
+    level: 'debug',
+    pretty: true
+  })
+}
 
 /**
  * Web socket to enable communication as sub pub
  */
-class WebSocketClient extends EventEmitter {
+class WebSocketClient extends EventEmitter2 {
   /**
    * @constructor
-   * @param {string} [uri=wss://localhost:9500] Full URI of server to connect to
-   * @param {string} [id=UUID] Unique ID of client, defaults to random UUID
+   * @param {String} [uri=wss://localhost:9500] Full URI of server to connect to
+   * @param {String} [id=UUID] Unique ID of client, defaults to random UUID
    * @param {Serializer} [serializer] singleton with an encode and decode object to be used
    * @param {Encoder} [serializer.encode=msgpack5/encode] encoder function
    * @param {Decoder} [serializer.decode=msgpack5/decode] decoder function
+   * @fires WebSocketClient#ready
+   * @fires WebSocketClient#close
+   * @fires WebSocketClient#connect
+   * @returns {WebSocketClient}
    */
   constructor ({ uri = 'ws://localhost:9500', id, serializer } = {}) {
-    super()
+    super({
+      wildcard: true,
+      newListener: true
+    })
     let _this = this
     /**
-     * @prop {string} id Current `id` of client. Defaults to random `UUID()`
+     * @prop {String} id Current `id` of client. Defaults to random `UUID()`
      */
     this.id = id || UUID()
     /**
-     * @prop {string} uri `uri` which `client` uses to connect
+     * @prop {String} blacklistNamespaces array of namespaces that will be filtered out in pub()
+     */
+    this.blacklist = [
+      '_pub',
+      '_sub',
+      '_unsub',
+      'close',
+      'connect',
+      'error',
+      'message',
+      'open',
+      'ping',
+      'pong',
+      'reconnect',
+      'ready',
+      'unexpected-response'
+    ]
+    /**
+     * @prop {String} uri `uri` which `client` uses to connect
      */
     this.uri = url.parse(uri)
     this.uri.auth = this.id
@@ -73,82 +107,115 @@ class WebSocketClient extends EventEmitter {
     /**
      * @prop {Array} subscribed Curret subscribed events. Defaults to `['connect']`
      */
-    this.subscribed = ['connect']
+    this.subscribed = []
     /**
      * @prop {Message} message
      */
     this.message = new Message(serializer)
     /**
-     * @prop {type} `ws` client
+     * @prop {Object} `ws` client
      */
     this.client = new Client(this.uri)
     this.client
-      .on('open', () => _this.emit('open'))
+      .on('open', () => {
+        if (_this.client.readyState === 1) {
+          /**
+           * client has opened and is ready
+           * @event WebSocketClient#ready
+           */
+          _this.emit('ready')
+          _this._send('_sub', _this.subscribed)
+        }
+      })
+      /**
+       * client has closed connection
+       * @event WebSocketClient#close
+       */
       .on('close', () => _this.emit('close'))
+      /**
+       * client has received a connect event
+       * @event WebSocketClient#connect
+       * @type {String}
+       */
+
       .on('message', function (msg) {
         let unpacked = _this.message.unpack(msg)
         if (unpacked) {
           let { ns, pl } = unpacked
+          log.debug({
+            name: 'message', pl, ns
+          })
           _this.emit(ns, pl)
         }
       })
 
+    this.on('removeListener', function (ns, fn) {
+      if (_this._isSubscribed(ns)) {
+        _.remove(_this.subscribed, function (n) {
+          return n === ns
+        })
+        _this._send('_unsub', ns)
+      }
+    })
+
+    this.on('newListener', function (ns, fn) {
+      if (!_this._isSubscribed(ns) &amp;&amp; !_this._isBlacklisted(ns)) {
+        _this.subscribed = _.union(_this.subscribed, [ns])
+        _this._send('_sub', ns)
+      }
+    })
+
     return _this
+  }
+  /**
+   * @memberof WebSocketClient
+   * @prop {Boolean} connecting client is connecting
+   */
+  get connecting () {
+    return this.client.readyState === 0
+  }
+  /**
+   * @memberof WebSocketClient
+   * @prop {Boolean} connecting client is open
+   */
+  get open () {
+    return this.client.readyState === 1
+  }
+  /**
+   * @memberof WebSocketClient
+   * @prop {Boolean} connecting client is closeing
+   */
+  get closing () {
+    return this.client.readyState === 2
+  }
+  /**
+   * @memberof WebSocketClient
+   * @prop {Boolean} connecting client is closed
+   */
+  get closed () {
+    return this.client.readyState === 3
   }
 
   /**
    * @description pub Publish a payload to a given event namespace
-   * @param {string} namespace - delimited namespace to publish on
-   * @param {any} payload - the payload object to publish
+   * @param {String} namespace - delimited namespace to publish on
+   * @param {Number|String|Object} payload - the payload object to publish
+   * @param {Function} [callback] - optional callback for message sent
+   * @returns {WebSocketClient}
    * @memberof WebSocketClient
    */
-  pub (namespace, payload) {
-    let packed = this.message.pack(namespace, payload)
-    if (packed) {
-      this.client.send(packed)
+  pub (namespace, payload, callback = function () {}) {
+    if (this._isBlacklisted(namespace)) {
+      callback(new Error(`Cannot publish on blacklisted namespace: ${namespace}`))
+      return this
     }
-    return this
-  }
-
-  /**
-   * @description sub Subscribe to a event namespace, which will fire on the `client` object
-   * @param {string|Array} namespace - delimited namespace
-   * @memberof WebSocketClient
-   */
-
-  sub (ns) {
-    let _this = this
-    if (!_.isArray(ns)) {
-      ns = [ns]
-    }
-    this.subscribed = _.union(this.subscribed, ns)
-    _.forEach(ns, function (n) {
-      _this.pub('sub', n)
-    })
-    return this
-  }
-
-  /**
-   * @description unsub Unsubscribe from event namespace(s)
-   * @param {string|Array} namespace - delimited namespace
-   * @memberof WebSocketClient
-   */
-  unsub (ns) {
-    let _this = this
-    if (!_.isArray(ns)) {
-      ns = [ns]
-    }
-    _.remove(this.subscribed, function (n) {
-      return _.includes(ns, n)
-    })
-    _.forEach(ns, function (n) {
-      _this.pub('unsub', n)
-    })
+    this._send(namespace, payload, callback)
     return this
   }
 
   /**
    * @description close the client connection
+   * @returns {WebSocketClient}
    * @memberof WebSocketClient
    */
   close () {
@@ -159,6 +226,37 @@ class WebSocketClient extends EventEmitter {
     }
     return this
   }
+
+  /**
+   * @private
+   */
+  _send (namespace, payload, callback = function () {}) {
+    let packed = this.message.pack(namespace, payload)
+    if (packed) {
+      try {
+        this.client.send(packed, callback)
+      } catch (err) {
+        this.client.emit('error', err)
+        callback(err)
+      }
+    } else {
+      callback(new Error('Packing payload did not succeed'))
+    }
+    return this
+  }
+  /**
+   * @private
+   */
+  _isSubscribed (ns) {
+    return _.includes(this.subscribed, ns)
+  }
+  /**
+   * @private
+   */
+  _isBlacklisted (ns) {
+    return _.includes(this.blacklist, ns)
+  }
+
 }
 
 module.exports = WebSocketClient
@@ -174,7 +272,7 @@ module.exports = WebSocketClient
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jan 19 2017 22:32:08 GMT-0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 00:09:30 GMT-0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -1,27 +1,31 @@
 const { join } = require('path')
+const tools = require(join(__dirname, '..'))
 
-let Server = require(join(__dirname, '..')).server('websocket')
+const Logger = tools.logger()
+const log = new Logger({
+  pretty: true
+})
+
+let Server = tools.server('websocket')
 let server = new Server()
 
 server.on('error', function (err) {
-  console.error('* client error', err)
+  log.error({ err })
 })
 
 server.on('connection', function (ID) {
-  console.log('* client connection: ', ID)
+  log.info({ name: 'connection', msg: ID })
 })
 
 server.on('reconnect', function (ID) {
-  console.log('* client reconnect: ', ID)
+  log.info({ name: 'reconnect', msg: ID })
 })
 
 server.on('close', function (ID) {
-  console.log('* client closed', ID)
+  log.info({ name: 'closed', msg: ID })
 })
 
-server.on('test', function (msg) {
-  console.log('* test from client', msg)
-  server.pub('ok', {
-    gotit: true
-  })
+server.on('toserver.**', function (msg, ID) {
+  log.info({ name: 'toserver.**', event: this.event, msg, from: ID })
+  server.pub('toclient.hello', 'a/s/l?')
 })

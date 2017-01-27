@@ -27,7 +27,7 @@ module.exports.message = function () {
 
 /**
  * Starts a messaging server
- * @param {string} type Type of server
+ * @param {String} type Type of server
  * @returns {WebSocketServer}
  */
 module.exports.server = function (type) {
@@ -36,7 +36,7 @@ module.exports.server = function (type) {
 
 /**
  * Starts a messaging client
- * @param {string} type Type of client
+ * @param {String} type Type of client
  * @returns {WebSocketClient}
  */
 
