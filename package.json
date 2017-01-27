@@ -31,11 +31,12 @@
   },
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
-    "eventemitter2": "2.2.2",
-    "msgpack5": "3.4.1",
-    "pino": "3.0.5",
-    "uuid": "3.0.1",
-    "ws": "1.1.1"
+    "eventemitter2": "~2.2.2",
+    "minimatch": "~3.0.3",
+    "msgpack5": "~3.4.1",
+    "pino": "~3.0.5",
+    "uuid": "~3.0.1",
+    "ws": "~1.1.1"
   },
   "standard": {
     "ignore": [
