@@ -4,8 +4,7 @@ const { join } = require('path')
 const Stream = require('stream')
 const async = require('async')
 const test = require('tape')
-const { logger: Logger } = require(join(__dirname, '..'))
-const logger = new Logger()
+const { logger } = require(join(__dirname, '..'))
 
 const levels = [
   'fatal',

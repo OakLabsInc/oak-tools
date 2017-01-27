@@ -9,7 +9,9 @@ test('*** server', function (t) {
   t.plan(10)
 
   let WsServer = tools.server('websocket')
-  let server = new WsServer({}, function () {
+  let server = new WsServer({
+    port: 5000
+  }, function () {
     t.pass('server should callback when ready')
   })
 

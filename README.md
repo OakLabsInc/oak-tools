@@ -26,11 +26,19 @@ Head on over to the [documentation](https://oaklabsinc.github.io/oak-tools/) pag
 The logger is based off [pino](https://github.com/pinojs/pino) and has nearly the same same option parameters. The following example are the default options.
 
 ```javascript
-const Logger = require('oak-tools').logger
-let log = new Logger({
+const { logger } = require('oak-tools')
+let log = logger({
   level: 'info',
   stream: process.stdout,
   pretty: true
+})
+log.info('sup')
+log.error({
+  err: new Error('crap...')
+})
+log.debug({
+  msg: 'debug message here',
+  now: Date.now()
 })
 
 ```

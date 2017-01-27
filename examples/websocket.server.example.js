@@ -1,13 +1,14 @@
 const { join } = require('path')
 const tools = require(join(__dirname, '..'))
 
-const Logger = tools.logger()
-const log = new Logger({
+const log = tools.logger({
   pretty: true
 })
 
 let Server = tools.server('websocket')
-let server = new Server()
+let server = new Server({
+  port: 5050
+})
 
 server.on('error', function (err) {
   log.error({ err })

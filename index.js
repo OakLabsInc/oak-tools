@@ -14,7 +14,7 @@ const { join } = require('path')
  * @returns {Logger}
  */
 module.exports.logger = function () {
-  return require(join(__dirname, 'lib', 'logger'))
+  return require(join(__dirname, 'lib', 'logger')).apply(this, arguments)
 }
 
 /**
