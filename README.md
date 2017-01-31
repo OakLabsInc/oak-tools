@@ -121,6 +121,7 @@ Package | Version | Dev
 [minimatch](https://www.npmjs.com/package/minimatch) | ~3.0.3 | ✖
 [msgpack5](https://www.npmjs.com/package/msgpack5) | ~3.4.1 | ✖
 [pino](https://www.npmjs.com/package/pino) | ~3.0.5 | ✖
+[swagger-client](https://www.npmjs.com/package/swagger-client) | ~2.1.32 | ✖
 [uuid](https://www.npmjs.com/package/uuid) | ~3.0.1 | ✖
 [ws](https://www.npmjs.com/package/ws) | ~1.1.1 | ✖
 [coveralls](https://www.npmjs.com/package/coveralls) | 2.11.15 | ✔
