@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib/message.js - Documentation</title>
+    <title>lib/api.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">lib/message.js</h1>
+    <h1 class="page-title">lib/api.js</h1>
     
 
     
@@ -38,110 +38,40 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const _ = require('lodash')
-const msgpack = require('msgpack5')()
-
+const Swagger = require('swagger-client')
 /**
- * Message encapsulation and decapsulation
+ * API options object
+ * @typedef {Object} ApiOptions
+ * @prop {String} [url=https://localhost/] Full URL of to a swagger spec
+ * @prop {AsyncResultCallback} [success=callback] success callback
+ * @prop {ErrorCallback} [failure=callback] error callback
+ * @prop {String} [basePath=/] overrides the URL basepath
+ * @see {@link https://github.com/swagger-api/swagger-js|swagger-client}
  */
-class Message {
-  /**
-   * Creates an instance of Message.
-   * @constructor
-   * @param {Object} [options] options object
-   * @param {Encoder} [options.encode=msgpack5/encode] Encoder function
-   * @param {Decoder} [options.decode=msgpack5/decode] Decoder function
-   */
-  constructor ({ encode, decode } = msgpack) {
-    /**
-     * @prop {Encoder} encoder function
-     */
-    this.encoder = encode
-    /**
-     * @prop {Decoder} decoder function
-     */
-    this.decoder = decode
-    /**
-     * @prop {String} Namespace delimiter
-     */
-    this.delimiter = '.'
-  }
-
-  static delimiter () {
-    return this.delimeter || '.'
-  }
-
-  /**
-   * Pack a message
-   * @param {String} namespace namespace of the message
-   * @param {any} payload payload of the message
-   * @returns {Buffer} Encoded namespace and payload
-   */
-  pack (namespace, payload) {
-    let ret = this.encode(
-      [...namespace.split(this.delimiter), payload]
-    )
-    return ret
-  }
-  /**
-   * @typedef {Object} message
-   * @property {String} ns Namespace of the message
-   * @property {any} pl Payload of the message
-   */
-
-  /**
-   * Unpack a message
-   * @param {Buffer} data
-   * @returns {message}
-   * @memberof Message
-   */
-  unpack (data) {
-    let _this = this
-    let decoded = _this.decode(data)
-    // make sure the message decoded and it's an array
-    if (decoded &amp;&amp; _.isArray(decoded) &amp;&amp; decoded.length) {
-      // push null to the unpack if there is no payload
-      if (decoded.length === 1) {
-        decoded.push(null)
-      }
-      // namespace consists of all array items minus the last
-      let namespace = _.join(_.initial(decoded), '.')
-      // payload is the last array item
-      let payload = _.last(decoded)
-      return { ns: namespace, pl: payload }
+/**
+ * Creates a API object
+ * @constructor
+ * @param {String|ApiOptions} options options object, or the name of the API (sets URL default to to `https://localhost/name`)
+ * @param {AsyncResultCallback} [callback] returns ({Error}, {@link https://github.com/swagger-api/swagger-js|swagger-client})
+ * @returns {@link https://github.com/swagger-api/swagger-js|swagger-client}
+ */
+class Api {
+  constructor (opts = {}, cb = function () {}) {
+    if (_.isString(opts)) {
+      opts = { name: opts }
     }
-  }
-
-  /**
-   * Encode data
-   * @param {any} data
-   * @returns {Buffer}
-   * @memberof Message
-   */
-  encode (data) {
-    try {
-      let enc = this.encoder(data)
-      return enc
-    } catch (err) {
-      return err
-    }
-  }
-
-  /**
-   * Decode data
-   * @param {Buffer} data
-   * @returns {any}
-   * @memberof Message
-   */
-  decode (data) {
-    try {
-      return this.decoder(data)
-    } catch (err) {
-      return err
-    }
+    let defaultUrl = 'https://localhost/' + _.defaultTo(opts.name, '')
+    let client = new Swagger(_.defaultsDeep(opts, {
+      basePath: opts.name,
+      url: !opts.spec ? defaultUrl : undefined,
+      success: function () { cb(null, client) },
+      failure: cb
+    }))
+    return client
   }
 }
 
-module.exports = Message
+module.exports = Api
 </code></pre>
         </article>
     </section>

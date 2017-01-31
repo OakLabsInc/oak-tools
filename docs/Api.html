@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Logger - Documentation</title>
+    <title>Api - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Logger</h1>
+    <h1 class="page-title">Api</h1>
     
 
     
@@ -40,8 +40,10 @@
 <header>
     
         <h2>
-        Logger
+        Api
         </h2>
+        
+            <div class="class-description"><p>Creates a API object</p></div>
         
     
 </header>
@@ -52,8 +54,10 @@
         
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Logger"><span class="type-signature"></span>new Logger<span class="signature">(options)</span><span class="type-signature"> &rarr; {<a href="global.html#logger">logger</a>}</span></h4>
+    <h4 class="name" id="Api"><span class="type-signature"></span>new Api<span class="signature">(options, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -65,7 +69,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_logger.js.html">lib/logger.js</a>, <a href="lib_logger.js.html#line24">line 24</a>
+        <a href="lib_api.js.html">lib/api.js</a>, <a href="lib_api.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -104,10 +108,6 @@
 
 
 
-<div class="description">
-    <p>Creates a logger object</p>
-</div>
-
 
 
 
@@ -131,6 +131,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -149,53 +151,10 @@
             <td class="type">
             
                 
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>options object</p>
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
 <span class="param-type">String</span>
+|
+
+<span class="param-type"><a href="global.html#ApiOptions">ApiOptions</a></span>
 
 
             
@@ -204,8 +163,6 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -214,25 +171,21 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last"><p>set the logger instance name</p></td>
+            <td class="description last"><p>options object, or the name of the API (sets URL default to to <code>https://localhost/name</code>)</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>level</code></td>
+                <td class="name"><code>callback</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">AsyncResultCallback</span>
 
 
             
@@ -251,99 +204,8 @@
             
 
             
-                <td class="default">
-                
-                    <code>info</code>
-                
-                </td>
-            
 
-            <td class="description last"><p>set the log level, default is info</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>stream</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>stdout</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>outbound stream, defaults to process.stdout</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pretty</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>false</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>pretty printing, defaults to false</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>returns ({Error}, <a href="https://github.com/swagger-api/swagger-js">swagger-client</a>)</p></td>
         </tr>
 
     
@@ -366,19 +228,11 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p><a href="https://github.com/swagger-api/swagger-js">swagger-client</a></p>
+</div>
 
 
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#logger">logger</a></span>
-
-
-    </dd>
-</dl>
 
     
 
