@@ -39,7 +39,12 @@ module.exports.server = function (type) {
  * @param {String} type Type of client
  * @returns {WebSocketClient}
  */
-
 module.exports.client = function (type) {
   return require(join(__dirname, 'lib', type, 'client'))
 }
+
+/**
+ * Swagger client generator
+ * @returns {Util}
+ */
+module.exports.api = require(join(__dirname, 'lib', 'api'))
