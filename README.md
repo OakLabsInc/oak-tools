@@ -19,7 +19,7 @@ Head on over to the [documentation](https://oaklabsinc.github.io/oak-tools/) pag
 
 ## Usage
 
-`oak-tools` consists of a few helpful utility methods. Everything exposed from the module is a `Class` and needs to be constructed using `new`
+`oak-tools` consists of a few helpful utility methods. Everything exposed from the module is a `Class` and needs to be constructed using `new`, except the `logger`
 
 **logger()**
 
@@ -28,9 +28,10 @@ The logger is based off [pino](https://github.com/pinojs/pino) and has nearly th
 ```javascript
 const { logger } = require('oak-tools')
 let log = logger({
+  // these are the default properties
   level: 'info',
   stream: process.stdout,
-  pretty: true
+  pretty: false
 })
 log.info('sup')
 log.error({
@@ -43,11 +44,9 @@ log.debug({
 
 ```
 
-
-
 **server(_type_)**
 
-The server is extended from a plain 'ol [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter). Head [here](https://oaklabsinc.github.io/oak-tools/WebSocketServer.html) for full documentation on the `server` class
+The server is extended from a good 'ol [EventEmitter2](https://github.com/asyncly/EventEmitter2). Head [here](https://oaklabsinc.github.io/oak-tools/WebSocketServer.html) for full documentation on the `server` class
 
 ```javascript
 const msgpack = require('msgpack5')()
@@ -55,6 +54,7 @@ const Server = require('oak-tools').server('websocket')
 
 // all these options are, well... optional
 let server = new Server({
+  // these are the default properties
   port: 9500,
   host: 'localhost',
   serializer: { encode, decode } = msgpack
@@ -90,7 +90,7 @@ const { join } = require('path')
 let Client = require(join(__dirname, '..')).client('websocket')
 
 let client = new Client({
-  id: 'sean connery'
+  id: 'sean connery' // defaults to random UUID
 })
 
 client.on('ready', function () {
@@ -103,15 +103,63 @@ client.on('ready', function () {
 })
 ```
 
+## Message Rationale & Flow
 
+The goal of the server/client is to wrap up all the higher level messaging operations to be more protocol agnostic (as well as non-repetitive). This means we have a couple more steps than a normal `TCP` or `WebSocket` flow:
 
-## Scripts
+**Client -> Server**
+1. Client publishes on a namespace
+   > `client > pub('foo.bar', { my: 'message' })`
 
- - **npm run coverage** : `node node_modules/.bin/istanbul cover node_modules/.bin/tape test/*.js || true`
- - **npm run coveralls** : `npm run-script coverage && node node_modules/.bin/coveralls < coverage/lcov.info && rm -rf coverage/ || true`
- - **npm run generate-docs** : `node_modules/.bin/jsdoc -c jsdoc.json`
- - **npm run readme** : `node ./node_modules/.bin/node-readme`
- - **npm run test** : `node_modules/.bin/standard && find test/*.js | xargs -n 1 node | node_modules/.bin/tap-difflet`
+2. The namespace and message get split into an flat array, where the last item is the message
+   > `client > outbound message [ 'foo', 'bar', { my: 'message' } ]`
+
+3. Payload gets encoded by the client
+   > `client > encode(array) // <Buffer a5 68 65 6c 6c 6f>`
+
+4. Client sends encoded message to the server
+   > `client > send(payload)`
+
+5. Server receives payload Buffer
+   > `server > on('message', decode)`
+
+6. Server receives and unpacks the payload
+   > `server > decode(payload) // our array`
+
+7. Server reconstructs the array, and emits the message
+   > `server > emit('foo.bar', { my: 'message' })`
+
+**Server -> Client(s)**
+
+1. Client sends a subscription message to the server, through its binding
+   > `client > on('foo.*', handler)`
+
+2. Server receives a subscription event from the client
+   > `server > on('_sub') // remember client wants 'foo.*' messages`
+  
+   Time passes...
+
+3. Server sends an event to all clients that subscribed
+   > `server > pub('foo.baz', { my: 'message' }) // matches anyone who sent _sub to foo.*`
+
+4. Encode and write the same way the client does to each socket
+   > `server > each connections send(payload)`
+
+5. Client receives payload, unpacks, and emits it
+   > `client > on('foo.*', fn(data))  // this.event === foo.baz`
+
+**Serializer**
+
+On both server and client, encoder and decoder to pass messages. The `serializer` consists of the encoding and decoding methods to use against payloads.
+By default, we use `msgpack5`, but doing something as simple as this will work:
+```javascript
+new clientOrServer({
+  serializer: {
+    encode: JSON.stringify,
+    decode: JSON.parse
+  }
+})
+```
 
 ## Dependencies
 
@@ -144,4 +192,4 @@ Contributions welcome; Please submit all pull requests against the master branch
 
 ## License
 
- - **MIT** : http://opensource.org/licenses/MIT
+ - **Apache 2.0** : http://opensource.org/licenses/Apache-2.0
