@@ -108,6 +108,7 @@ client.on('ready', function () {
 The goal of the server/client is to wrap up all the higher level messaging operations to be more protocol agnostic (as well as non-repetitive). This means we have a couple more steps than a normal `TCP` or `WebSocket` flow:
 
 **Client -> Server**
+
 1. Client publishes on a namespace
    > `client > pub('foo.bar', { my: 'message' })`
 
