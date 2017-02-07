@@ -1,6 +1,6 @@
 {
   "name": "oak-tools",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Helpful utilities for developing oak applications",
   "main": "index.js",
   "scripts": {
@@ -32,12 +32,14 @@
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
     "eventemitter2": "~2.2.2",
+    "mdns-js": "~0.5.3",
     "minimatch": "~3.0.3",
     "msgpack5": "~3.4.1",
     "pino": "~3.0.5",
     "swagger-client": "~2.1.32",
     "uuid": "~3.0.1",
-    "ws": "~1.1.1"
+    "ws": "~1.1.1",
+    "ws-heartbeats": "~1.0.0"
   },
   "standard": {
     "ignore": [
