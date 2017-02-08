@@ -34,3 +34,11 @@ client.on('ready', function () {
 .on('reconnect', function (ID) {
   logger.info({ name: 'reconnect', msg: ID })
 })
+
+client.client.on('ping', function () {
+  logger.info({ name: 'ping' })
+})
+
+client.client.on('pong', function () {
+  logger.info({ name: 'pong' })
+})

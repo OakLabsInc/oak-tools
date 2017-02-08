@@ -44,6 +44,15 @@ module.exports.client = function (type) {
 }
 
 /**
+ * Service discovery
+ * @param {String} type Type of discovery
+ * @returns {Mdns}
+ */
+module.exports.discovery = function (type = 'mdns') {
+  return require(join(__dirname, 'lib', 'discovery', type))
+}
+
+/**
  * Swagger client generator
  * @returns {Util}
  */

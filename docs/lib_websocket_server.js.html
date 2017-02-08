@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Api.html">Api</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#decode">decode</a></li><li data-type='method'><a href="Message.html#encode">encode</a></li><li data-type='method'><a href="Message.html#pack">pack</a></li><li data-type='method'><a href="Message.html#unpack">unpack</a></li></ul></li><li><a href="WebSocketClient.html">WebSocketClient</a><ul class='methods'><li data-type='method'><a href="WebSocketClient.html#close">close</a></li><li data-type='method'><a href="WebSocketClient.html#pub">pub</a></li></ul></li><li><a href="WebSocketServer.html">WebSocketServer</a><ul class='methods'><li data-type='method'><a href="WebSocketServer.html#close">close</a></li><li data-type='method'><a href="WebSocketServer.html#pub">pub</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-oak-tools.html">oak-tools</a><ul class='methods'><li data-type='method'><a href="module-oak-tools.html#.client">client</a></li><li data-type='method'><a href="module-oak-tools.html#.logger">logger</a></li><li data-type='method'><a href="module-oak-tools.html#.message">message</a></li><li data-type='method'><a href="module-oak-tools.html#.server">server</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="WebSocketClient.html#event:close">close</a></li><li><a href="WebSocketClient.html#event:connect">connect</a></li><li><a href="WebSocketClient.html#event:ready">ready</a></li><li><a href="WebSocketServer.html#event:close">close</a></li><li><a href="WebSocketServer.html#event:connection">connection</a></li><li><a href="WebSocketServer.html#event:error">error</a></li><li><a href="WebSocketServer.html#event:reconnect">reconnect</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Api.html">Api</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Mdns.html">Mdns</a></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#decode">decode</a></li><li data-type='method'><a href="Message.html#encode">encode</a></li><li data-type='method'><a href="Message.html#pack">pack</a></li><li data-type='method'><a href="Message.html#unpack">unpack</a></li></ul></li><li><a href="WebSocketClient.html">WebSocketClient</a><ul class='methods'><li data-type='method'><a href="WebSocketClient.html#close">close</a></li><li data-type='method'><a href="WebSocketClient.html#pub">pub</a></li></ul></li><li><a href="WebSocketServer.html">WebSocketServer</a><ul class='methods'><li data-type='method'><a href="WebSocketServer.html#close">close</a></li><li data-type='method'><a href="WebSocketServer.html#pub">pub</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-oak-tools.html">oak-tools</a><ul class='methods'><li data-type='method'><a href="module-oak-tools.html#.client">client</a></li><li data-type='method'><a href="module-oak-tools.html#.discovery">discovery</a></li><li data-type='method'><a href="module-oak-tools.html#.logger">logger</a></li><li data-type='method'><a href="module-oak-tools.html#.message">message</a></li><li data-type='method'><a href="module-oak-tools.html#.server">server</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="Mdns.html#event:done">done</a></li><li><a href="Mdns.html#event:found">found</a></li><li><a href="WebSocketClient.html#event:close">close</a></li><li><a href="WebSocketClient.html#event:connect">connect</a></li><li><a href="WebSocketClient.html#event:ready">ready</a></li><li><a href="WebSocketServer.html#event:close">close</a></li><li><a href="WebSocketServer.html#event:connection">connection</a></li><li><a href="WebSocketServer.html#event:error">error</a></li><li><a href="WebSocketServer.html#event:reconnect">reconnect</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -45,6 +45,7 @@ const { createHash } = require('crypto')
 const { join } = require('path')
 const Message = require(join(__dirname, '..', 'message'))
 const glob = require('minimatch')
+const heartbeats = require('ws-heartbeats')
 
 /**
  * Web socket to enable communication as sub pub
@@ -58,6 +59,7 @@ class WebSocketServer extends EventEmitter2 {
    * @param {Number} [options.port=9500] server port
    * @param {String} [options.host=localhost] server host
    * @param {Boolean} [options.clientTracking=true] client tracking
+   * @param {Boolean} [options.heartbeats=true] use WS ping/pong heartbeats
    * @param {logger|Boolean} [options.logger={logger}] Optional logger to pass in, or use a default instance of {logger} set to debug level
    * @param {Function} [callback] executed when the server is ready
    * @fires WebSocketServer#connection
@@ -73,6 +75,7 @@ class WebSocketServer extends EventEmitter2 {
 
     opts = _.defaultsDeep(opts, {
       clientTracking: true,
+      heartbeats: true,
       logger: false
     })
 
@@ -100,6 +103,10 @@ class WebSocketServer extends EventEmitter2 {
 
     this.server
       .on('connection', function (socket) {
+        if (opts.heartbeats) {
+          // start ping/pong heartbeats
+          heartbeats(socket)
+        }
         // use the http basic auth as ID
         let rawID = _.has(socket.upgradeReq.headers, 'authorization') ? Buffer(
           socket.upgradeReq.headers.authorization.replace('Basic ', ''),
@@ -285,7 +292,7 @@ module.exports = WebSocketServer
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Feb 02 2017 18:11:35 GMT-0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Feb 07 2017 20:17:43 GMT-0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
