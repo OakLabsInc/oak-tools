@@ -1,5 +1,7 @@
 # oak-tools
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/OakLabsInc/oak-tools.svg)](https://greenkeeper.io/)
+
 ![npm](https://img.shields.io/npm/v/oak-tools.svg) ![Circle CI build status](https://circleci.com/gh/OakLabsInc/oak-tools.svg?style=svg) [![Coverage Status](https://coveralls.io/repos/github/OakLabsInc/oak-tools/badge.svg?branch=master)](https://coveralls.io/github/OakLabsInc/oak-tools?branch=master) ![license](https://img.shields.io/npm/l/oak-tools.svg) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-green.svg)](http://standardjs.com/)
 
 Helpful utilities for developing oak applications
