@@ -53,6 +53,15 @@ module.exports.discovery = function (type = 'mdns') {
 }
 
 /**
+ * Service advertiser
+ * @param {String} type Type of advertiser
+ * @returns {Mdns}
+ */
+module.exports.advertise = function (type = 'mdns') {
+  return require(join(__dirname, 'lib', 'advertise', type))
+}
+
+/**
  * Swagger client generator
  * @returns {Util}
  */
