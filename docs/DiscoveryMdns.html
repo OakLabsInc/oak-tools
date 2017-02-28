@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Message - Documentation</title>
+    <title>DiscoveryMdns - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Message</h1>
+    <h1 class="page-title">DiscoveryMdns</h1>
     
 
     
@@ -40,10 +40,10 @@
 <header>
     
         <h2>
-        Message
+        DiscoveryMdns
         </h2>
         
-            <div class="class-description"><p>Message encapsulation and decapsulation</p></div>
+            <div class="class-description"><p>Creates an instance of mDNS browser.</p></div>
         
     
 </header>
@@ -57,7 +57,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Message"><span class="type-signature"></span>new Message<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="DiscoveryMdns"><span class="type-signature"></span>new DiscoveryMdns<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -69,7 +69,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line7">line 7</a>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -100,6 +100,13 @@
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/mdns-js/node-mdns-js/">mdns-js</a></li>
+        </ul>
+    </dd>
+    
 
     
 </dl>
@@ -107,10 +114,6 @@
 
 
 
-
-<div class="description">
-    <p>Creates an instance of Message.</p>
-</div>
 
 
 
@@ -205,13 +208,13 @@
 
         <tr>
             
-                <td class="name"><code>encode</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">String</span>
 
 
             
@@ -232,25 +235,25 @@
             
                 <td class="default">
                 
-                    <code>msgpack5/encode</code>
+                    <code>https</code>
                 
                 </td>
             
 
-            <td class="description last"><p>Encoder function</p></td>
+            <td class="description last"><p>Service Name <a href="http://www.dns-sd.org/serviceTypes.html">See mDNS Service Types</a></p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>decode</code></td>
+                <td class="name"><code>protocol</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">String</span>
 
 
             
@@ -271,12 +274,125 @@
             
                 <td class="default">
                 
-                    <code>msgpack5/decode</code>
+                    <code>tcp</code>
                 
                 </td>
             
 
-            <td class="description last"><p>Decoder function</p></td>
+            <td class="description last"><p>Service Protocol to search on, udp or tcp</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subtypes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Array of subtypes</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>5000</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Timeout to stop search</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#logger">logger</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Optional logger</p></td>
         </tr>
 
     
@@ -294,6 +410,13 @@
 
 
 
+
+<h5>Fires:</h5>
+<ul>
+    <li>DiscoveryMdns#event:found</li>
+
+    <li>DiscoveryMdns#event:stop</li>
+</ul>
 
 
 
@@ -323,7 +446,7 @@
 
         
             
-<h4 class="name" id="decoder"><span class="type-signature"></span>decoder<span class="type-signature"></span></h4>
+<h4 class="name" id="browser"><span class="type-signature"></span>browser<span class="type-signature"></span></h4>
 
 
 
@@ -334,7 +457,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line23">line 23</a>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -364,6 +487,13 @@
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/mdns-js/node-mdns-js/">mdns-js</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -397,13 +527,13 @@
 
         <tr>
             
-                <td class="name"><code>decoder</code></td>
+                <td class="name"><code>browser</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">Object</span>
 
 
             
@@ -413,7 +543,7 @@
 
             
 
-            <td class="description last"><p>function</p></td>
+            <td class="description last"><p>mDNS browser</p></td>
         </tr>
 
     
@@ -434,7 +564,7 @@
 
         
             
-<h4 class="name" id="delimiter"><span class="type-signature"></span>delimiter<span class="type-signature"></span></h4>
+<h4 class="name" id="excludeInterfaces"><span class="type-signature"></span>excludeInterfaces<span class="type-signature"></span></h4>
 
 
 
@@ -445,7 +575,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line27">line 27</a>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -508,7 +638,118 @@
 
         <tr>
             
-                <td class="name"><code>Namespace</code></td>
+                <td class="name"><code>excludeInterfaces</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>network interfaces that are excluded</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -524,7 +765,7 @@
 
             
 
-            <td class="description last"><p>delimiter</p></td>
+            <td class="description last"><p>Service name</p></td>
         </tr>
 
     
@@ -545,7 +786,7 @@
 
         
             
-<h4 class="name" id="encoder"><span class="type-signature"></span>encoder<span class="type-signature"></span></h4>
+<h4 class="name" id="protocol"><span class="type-signature"></span>protocol<span class="type-signature"></span></h4>
 
 
 
@@ -556,7 +797,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line19">line 19</a>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -619,445 +860,7 @@
 
         <tr>
             
-                <td class="name"><code>encoder</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>function</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="decode"><span class="type-signature"></span>decode<span class="signature">(data)</span><span class="type-signature"> &rarr; {any}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line100">line 100</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Decode data</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Buffer</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">any</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="encode"><span class="type-signature"></span>encode<span class="signature">(data)</span><span class="type-signature"> &rarr; {Buffer}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line81">line 81</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Encode data</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Buffer</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="pack"><span class="type-signature"></span>pack<span class="signature">(namespace, payload)</span><span class="type-signature"> &rarr; {Buffer}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Pack a message</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>namespace</code></td>
+                <td class="name"><code>protocol</code></td>
             
 
             <td class="type">
@@ -1073,30 +876,7 @@
 
             
 
-            <td class="description last"><p>namespace of the message</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>payload</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>payload of the message</p></td>
+            <td class="description last"><p>Service protocol</p></td>
         </tr>
 
     
@@ -1115,39 +895,10 @@
 
 
 
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Encoded namespace and payload</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Buffer</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
         
             
+<h4 class="name" id="subtypes"><span class="type-signature"></span>subtypes<span class="type-signature"></span></h4>
 
-    
-
-    <h4 class="name" id="unpack"><span class="type-signature"></span>unpack<span class="signature">(data)</span><span class="type-signature"> &rarr; {<a href="global.html#message">message</a>}</span></h4>
-
-    
 
 
 
@@ -1157,7 +908,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_message.js.html">lib/message.js</a>, <a href="lib_message.js.html#line58">line 58</a>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -1194,26 +945,11 @@
 
 
 
+    <h5 class="subsection-title">Properties:</h5>
 
-
-<div class="description">
-    <p>Unpack a message</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
 
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -1235,13 +971,13 @@
 
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>subtypes</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Buffer</span>
+<span class="param-type">Array</span>
 
 
             
@@ -1251,7 +987,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Service subtypes to search on</p></td>
         </tr>
 
     
@@ -1270,28 +1006,120 @@
 
 
 
-
-<h5>Returns:</h5>
-
         
+            
+<h4 class="name" id="timeout"><span class="type-signature"></span>timeout<span class="type-signature"></span></h4>
 
 
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#message">message</a></span>
 
 
-    </dd>
-</dl>
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_discovery_mdns.js.html">lib/discovery/mdns.js</a>, <a href="lib_discovery_mdns.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>search timeout in milliseconds</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
     
 
     

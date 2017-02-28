@@ -15,11 +15,6 @@ discovery
       msg: 'service',
       service: srv
     })
-    // console.log(JSON.stringify({
-    //   addr: srv.address,
-    //   txt: srv.txt,
-    //   name: srv.fullname
-    // }, null, 2))
   })
   .on('done', function (srvs) {
     logger.debug({
