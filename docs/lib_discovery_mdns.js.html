@@ -22,7 +22,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Api.html">Api</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Mdns.html">Mdns</a></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#decode">decode</a></li><li data-type='method'><a href="Message.html#encode">encode</a></li><li data-type='method'><a href="Message.html#pack">pack</a></li><li data-type='method'><a href="Message.html#unpack">unpack</a></li></ul></li><li><a href="WebSocketClient.html">WebSocketClient</a><ul class='methods'><li data-type='method'><a href="WebSocketClient.html#close">close</a></li><li data-type='method'><a href="WebSocketClient.html#pub">pub</a></li></ul></li><li><a href="WebSocketServer.html">WebSocketServer</a><ul class='methods'><li data-type='method'><a href="WebSocketServer.html#close">close</a></li><li data-type='method'><a href="WebSocketServer.html#pub">pub</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-oak-tools.html">oak-tools</a><ul class='methods'><li data-type='method'><a href="module-oak-tools.html#.client">client</a></li><li data-type='method'><a href="module-oak-tools.html#.discovery">discovery</a></li><li data-type='method'><a href="module-oak-tools.html#.logger">logger</a></li><li data-type='method'><a href="module-oak-tools.html#.message">message</a></li><li data-type='method'><a href="module-oak-tools.html#.server">server</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="Mdns.html#event:done">done</a></li><li><a href="Mdns.html#event:found">found</a></li><li><a href="WebSocketClient.html#event:close">close</a></li><li><a href="WebSocketClient.html#event:connect">connect</a></li><li><a href="WebSocketClient.html#event:ready">ready</a></li><li><a href="WebSocketServer.html#event:close">close</a></li><li><a href="WebSocketServer.html#event:connection">connection</a></li><li><a href="WebSocketServer.html#event:error">error</a></li><li><a href="WebSocketServer.html#event:reconnect">reconnect</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AdvertiseMdns.html">AdvertiseMdns</a></li><li><a href="Api.html">Api</a></li><li><a href="DiscoveryMdns.html">DiscoveryMdns</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#decode">decode</a></li><li data-type='method'><a href="Message.html#encode">encode</a></li><li data-type='method'><a href="Message.html#pack">pack</a></li><li data-type='method'><a href="Message.html#unpack">unpack</a></li></ul></li><li><a href="WebSocketClient.html">WebSocketClient</a><ul class='methods'><li data-type='method'><a href="WebSocketClient.html#close">close</a></li><li data-type='method'><a href="WebSocketClient.html#pub">pub</a></li></ul></li><li><a href="WebSocketServer.html">WebSocketServer</a><ul class='methods'><li data-type='method'><a href="WebSocketServer.html#close">close</a></li><li data-type='method'><a href="WebSocketServer.html#pub">pub</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-oak-tools.html">oak-tools</a><ul class='methods'><li data-type='method'><a href="module-oak-tools.html#.advertise">advertise</a></li><li data-type='method'><a href="module-oak-tools.html#.client">client</a></li><li data-type='method'><a href="module-oak-tools.html#.discovery">discovery</a></li><li data-type='method'><a href="module-oak-tools.html#.logger">logger</a></li><li data-type='method'><a href="module-oak-tools.html#.message">message</a></li><li data-type='method'><a href="module-oak-tools.html#.server">server</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="Mdns.html#event:done">done</a></li><li><a href="Mdns.html#event:found">found</a></li><li><a href="Mdns.html#event:start">start</a></li><li><a href="Mdns.html#event:stop">stop</a></li><li><a href="WebSocketClient.html#event:close">close</a></li><li><a href="WebSocketClient.html#event:connect">connect</a></li><li><a href="WebSocketClient.html#event:ready">ready</a></li><li><a href="WebSocketServer.html#event:close">close</a></li><li><a href="WebSocketServer.html#event:connection">connection</a></li><li><a href="WebSocketServer.html#event:error">error</a></li><li><a href="WebSocketServer.html#event:reconnect">reconnect</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <div id="main">
@@ -48,13 +48,14 @@ const { EventEmitter2 } = require('eventemitter2')
  * @param {Object} [options] options object
  * @param {String} [options.name=https] Service Name {@link http://www.dns-sd.org/serviceTypes.html|See mDNS Service Types}
  * @param {String} [options.protocol=tcp] Service Protocol to search on, udp or tcp
- * @param {Array} [options.subtypes] Array of subtypes
+ * @param {Array}  [options.subtypes] Array of subtypes
  * @param {Number} [options.timeout=5000] Timeout to stop search
- * @fires Mdns#found
- * @fires Mdns#done
+ * @param {logger} [options.logger] Optional logger
+ * @fires DiscoveryMdns#found
+ * @fires DiscoveryMdns#stop
  * @see {@link https://github.com/mdns-js/node-mdns-js/|mdns-js}
  */
-class Mdns extends EventEmitter2 {
+class DiscoveryMdns extends EventEmitter2 {
   constructor (opts = {}) {
     super({
       wildcard: true
@@ -127,7 +128,7 @@ class Mdns extends EventEmitter2 {
   start () {
     let _this = this
     if (!_.isNull(this.browser)) {
-      this.logger.debug({ name: 'mdns', msg: 'start' })
+      this.logger.debug({ name: 'discovery.mdns', msg: 'start' })
       this.browser
         .on('ready', function () {
           if (_this.timeout > 0) {
@@ -138,7 +139,7 @@ class Mdns extends EventEmitter2 {
           _this.browser.discover()
         })
         .on('update', function (srv) {
-          _this.logger.debug({ name: 'mdns', msg: 'service.found', properties: srv })
+          _this.logger.debug({ name: 'discovery.mdns', msg: 'service.found', properties: srv })
           _this.foundServices.push(srv)
           /**
            * service found
@@ -152,14 +153,14 @@ class Mdns extends EventEmitter2 {
   }
 
   stop () {
-    this.logger.debug({ name: 'mdns', msg: 'stop' })
+    this.logger.debug({ name: 'discovery.mdns', msg: 'stop' })
     if (this.browser) {
       /**
        * service search finished
        * @event Mdns#done
        * @type {Object}
        */
-      this.emit('done', this.foundServices)
+      this.emit('stop', this.foundServices)
       this.browser.stop()
       clearTimeout(this.timeoutFn)
     }
@@ -167,7 +168,7 @@ class Mdns extends EventEmitter2 {
   }
 }
 
-module.exports = Mdns
+module.exports = DiscoveryMdns
 </code></pre>
         </article>
     </section>
@@ -180,7 +181,7 @@ module.exports = Mdns
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Feb 14 2017 09:29:56 GMT-0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Feb 28 2017 13:01:10 GMT-0800 (PST) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

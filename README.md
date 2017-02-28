@@ -166,10 +166,10 @@ Package | Version | Dev
 [mdns-js](https://www.npmjs.com/package/mdns-js) | ~0.5.3 | ✖
 [minimatch](https://www.npmjs.com/package/minimatch) | ~3.0.3 | ✖
 [msgpack5](https://www.npmjs.com/package/msgpack5) | ~3.4.1 | ✖
-[pino](https://www.npmjs.com/package/pino) | ~3.4.0 | ✖
+[pino](https://www.npmjs.com/package/pino) | ~4.0.0 | ✖
 [swagger-client](https://www.npmjs.com/package/swagger-client) | ~2.1.32 | ✖
 [uuid](https://www.npmjs.com/package/uuid) | ~3.0.1 | ✖
-[ws](https://www.npmjs.com/package/ws) | ~2.0.3 | ✖
+[ws](https://www.npmjs.com/package/ws) | ~2.1.0 | ✖
 [ws-heartbeats](https://www.npmjs.com/package/ws-heartbeats) | ~1.0.0 | ✖
 [coveralls](https://www.npmjs.com/package/coveralls) | 2.11.16 | ✔
 [docdash](https://www.npmjs.com/package/docdash) | 0.4.0 | ✔
