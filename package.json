@@ -51,7 +51,7 @@
     "docdash": "0.4.0",
     "istanbul": "0.4.5",
     "node-readme": "0.1.9",
-    "standard": "9.0.2",
+    "standard": "10.0.0",
     "tap-difflet": "0.7.0",
     "tape": "4.6.3"
   }
