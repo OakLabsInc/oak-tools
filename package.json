@@ -31,11 +31,12 @@
   },
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
-    "eventemitter2": "~3.0.0",
+    "eventemitter2": "~4.1.0",
     "mdns-js": "~0.5.3",
     "minimatch": "~3.0.3",
     "msgpack5": "~3.4.1",
-    "pino": "~4.0.0",
+    "pino": "~4.2.0",
+    "safe-buffer": "~5.0.1",
     "swagger-client": "~3.0.2",
     "uuid": "~3.0.1",
     "ws": "~2.2.0",
@@ -47,12 +48,12 @@
     ]
   },
   "devDependencies": {
-    "coveralls": "2.12.0",
-    "docdash": "0.4.0",
-    "istanbul": "0.4.5",
-    "node-readme": "0.1.9",
-    "standard": "9.0.2",
-    "tap-difflet": "0.7.0",
-    "tape": "4.6.3"
+    "coveralls": "~2.13.0",
+    "docdash": "~0.4.0",
+    "istanbul": "~0.4.5",
+    "node-readme": "~0.1.9",
+    "standard": "~10.0.0",
+    "tap-difflet": "~0.7.0",
+    "tape": "~4.6.3"
   }
 }
