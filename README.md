@@ -162,22 +162,24 @@ new clientOrServer({
 
 Package | Version | Dev
 --- |:---:|:---:
-[eventemitter2](https://www.npmjs.com/package/eventemitter2) | ~3.0.0 | ✖
+[eventemitter2](https://www.npmjs.com/package/eventemitter2) | ~4.1.0 | ✖
 [mdns-js](https://www.npmjs.com/package/mdns-js) | ~0.5.3 | ✖
 [minimatch](https://www.npmjs.com/package/minimatch) | ~3.0.3 | ✖
 [msgpack5](https://www.npmjs.com/package/msgpack5) | ~3.4.1 | ✖
-[pino](https://www.npmjs.com/package/pino) | ~4.0.0 | ✖
-[swagger-client](https://www.npmjs.com/package/swagger-client) | ~2.1.32 | ✖
+[pino](https://www.npmjs.com/package/pino) | ~4.2.0 | ✖
+[safe-buffer](https://www.npmjs.com/package/safe-buffer) | ~5.0.1 | ✖
+[swagger-client](https://www.npmjs.com/package/swagger-client) | ~3.0.2 | ✖
 [uuid](https://www.npmjs.com/package/uuid) | ~3.0.1 | ✖
-[ws](https://www.npmjs.com/package/ws) | ~2.1.0 | ✖
+[ws](https://www.npmjs.com/package/ws) | ~2.2.0 | ✖
 [ws-heartbeats](https://www.npmjs.com/package/ws-heartbeats) | ~1.0.0 | ✖
-[coveralls](https://www.npmjs.com/package/coveralls) | 2.11.16 | ✔
-[docdash](https://www.npmjs.com/package/docdash) | 0.4.0 | ✔
-[istanbul](https://www.npmjs.com/package/istanbul) | 0.4.5 | ✔
-[node-readme](https://www.npmjs.com/package/node-readme) | 0.1.9 | ✔
-[standard](https://www.npmjs.com/package/standard) | 9.0.0-beta.0 | ✔
-[tap-difflet](https://www.npmjs.com/package/tap-difflet) | 0.7.0 | ✔
-[tape](https://www.npmjs.com/package/tape) | 4.6.3 | ✔
+[coveralls](https://www.npmjs.com/package/coveralls) | ~2.13.0 | ✔
+[docdash](https://www.npmjs.com/package/docdash) | ~0.4.0 | ✔
+[istanbul](https://www.npmjs.com/package/istanbul) | ~0.4.5 | ✔
+[jsdoc](https://www.npmjs.com/package/jsdoc) | ~3.4.3 | ✔
+[node-readme](https://www.npmjs.com/package/node-readme) | ~0.1.9 | ✔
+[standard](https://www.npmjs.com/package/standard) | ~10.0.0 | ✔
+[tap-difflet](https://www.npmjs.com/package/tap-difflet) | ~0.7.0 | ✔
+[tape](https://www.npmjs.com/package/tape) | ~4.6.3 | ✔
 
 
 ## Contributing
@@ -191,4 +193,4 @@ Contributions welcome; Please submit all pull requests against the master branch
 
 ## License
 
- - **Apache 2.0** : http://opensource.org/licenses/Apache-2.0
+ - **Apache-2.0** : http://opensource.org/licenses/Apache-2.0
