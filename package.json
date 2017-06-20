@@ -36,7 +36,7 @@
     "minimatch": "~3.0.3",
     "msgpack5": "~3.4.1",
     "pino": "~4.4.0",
-    "safe-buffer": "~5.0.1",
+    "safe-buffer": "~5.1.0",
     "swagger-client": "~3.0.2",
     "uuid": "~3.0.1",
     "ws": "~3.0.0",
