@@ -38,8 +38,8 @@
     "pino": "~4.4.0",
     "safe-buffer": "~5.1.0",
     "swagger-client": "~3.0.2",
-    "uuid": "~3.1.0",
-    "ws": "~2.3.0",
+    "uuid": "~3.0.1",
+    "ws": "~3.0.0",
     "ws-heartbeats": "~1.0.0"
   },
   "standard": {
