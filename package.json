@@ -34,7 +34,7 @@
     "eventemitter2": "~4.1.0",
     "mdns-js": "~0.5.3",
     "minimatch": "~3.0.3",
-    "msgpack5": "~3.4.1",
+    "msgpack5": "~3.5.0",
     "pino": "~4.4.0",
     "safe-buffer": "~5.1.0",
     "swagger-client": "~3.0.2",
