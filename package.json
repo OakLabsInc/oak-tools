@@ -32,12 +32,12 @@
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
     "eventemitter2": "~4.1.0",
-    "mdns-js": "~0.5.3",
+    "mdns-js": "~1.0.1",
     "minimatch": "~3.0.3",
     "msgpack5": "~3.5.0",
     "pino": "~4.10.1",
     "safe-buffer": "~5.1.0",
-    "swagger-client": "~3.1.0",
+    "swagger-client": "~3.3.3",
     "uuid": "~3.0.1",
     "ws": "~3.3.1",
     "ws-heartbeats": "~1.0.0"
