@@ -11,23 +11,23 @@ let server = new Server({
   logger
 })
 
-server.on('error', function (err) {
-  logger.error({ err })
-})
-
-server.on('connection', function (ID) {
-  logger.info({ name: 'connection', msg: ID })
-})
-
-server.on('reconnect', function (ID) {
-  logger.info({ name: 'reconnect', msg: ID })
-})
-
-server.on('close', function (ID) {
-  logger.info({ name: 'closed', msg: ID })
-})
-
-server.on('toserver.**', function (msg, ID) {
-  logger.info({ name: 'toserver.**', event: this.event, msg, from: ID })
-  server.pub('toclient.hello', 'a/s/l?')
-})
+server
+  .on('error', function (err) {
+    logger.error({ err })
+  })
+  .on('connection', function (ID) {
+    logger.info({ name: 'connection', msg: ID })
+  })
+  .on('reconnect', function (ID) {
+    logger.info({ name: 'reconnect', msg: ID })
+  })
+  .on('close', function (ID) {
+    logger.info({ name: 'closed', msg: ID })
+  })
+  .on('toserver.**', function (msg, ID) {
+    logger.info({ name: 'toserver.**', event: this.event, msg, from: ID })
+    server.pub('toclient.hello', 'a/s/l?')
+  })
+  .on('toserver.question', function () {
+    server.pub('toclient.answer', 'I am the server, did you not call me?')
+  })
