@@ -11,29 +11,30 @@ let client = new Client({
   logger
 })
 
-client.on('ready', function () {
-  logger.info({
-    name: 'ready'
+client
+  .on('ready', function () {
+    logger.info({
+      name: 'ready'
+    })
+    client
+      .on('toclient.*', function (msg) {
+        logger.info({ name: 'toclient.*', event: this.event, msg })
+      })
+      .pub('toserver.question', 'hey who are you?', function (err) {
+        if (err) {
+          logger.error('pub tosever error', { name: 'pub', err })
+        }
+      })
   })
-  client
-    .on('toclient.*', function (msg) {
-      logger.info({ name: 'toclient.*', event: this.event, msg })
-    })
-    .pub('toserver.question', 'hey who are you?', function (err) {
-      if (err) {
-        logger.error('pub tosever error', { name: 'pub', err })
-      }
-    })
-})
-.on('error', function (err) {
-  logger.error({ err })
-})
-.on('connect', function (ID) {
-  logger.info({ name: 'connect', msg: ID })
-})
-.on('reconnect', function (ID) {
-  logger.info({ name: 'reconnect', msg: ID })
-})
+  .on('error', function (err) {
+    logger.error({ err })
+  })
+  .on('connect', function (ID) {
+    logger.info({ name: 'connect', msg: ID })
+  })
+  .on('reconnect', function (ID) {
+    logger.info({ name: 'reconnect', msg: ID })
+  })
 
 client.client.on('ping', function () {
   logger.info({ name: 'ping' })
