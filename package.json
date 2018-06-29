@@ -37,7 +37,7 @@
     "msgpack5": "~4.0.0",
     "pino": "~4.10.1",
     "safe-buffer": "~5.1.0",
-    "swagger-client": "~3.4.0",
+    "swagger-client": "~3.8.6",
     "uuid": "~3.3.0",
     "ws": "~3.3.1",
     "ws-heartbeats": "~1.0.0"
@@ -48,7 +48,7 @@
     ]
   },
   "devDependencies": {
-    "coveralls": "~2.13.0",
+    "coveralls": "~3.0.1",
     "docdash": "~0.4.0",
     "istanbul": "~0.4.5",
     "jsdoc": "~3.5.0",
