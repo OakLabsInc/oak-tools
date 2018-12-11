@@ -32,7 +32,7 @@
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
     "eventemitter2": "~4.1.0",
-    "mdns-js": "1.0.0",
+    "mdns-js": "1.0.3",
     "minimatch": "~3.0.3",
     "msgpack5": "~4.0.0",
     "pino": "~4.10.1",
