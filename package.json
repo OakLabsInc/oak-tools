@@ -35,7 +35,7 @@
     "mdns-js": "1.0.0",
     "minimatch": "~3.0.3",
     "msgpack5": "~4.0.0",
-    "pino": "~4.10.1",
+    "pino": "~5.11.1",
     "safe-buffer": "~5.1.0",
     "swagger-client": "~3.8.6",
     "uuid": "~3.3.0",
