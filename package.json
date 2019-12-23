@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/OakLabsInc/oak-tools#readme",
   "dependencies": {
-    "eventemitter2": "~4.1.0",
+    "eventemitter2": "~6.0.0",
     "mdns-js": "1.0.0",
     "minimatch": "~3.0.3",
     "msgpack5": "~4.0.0",
